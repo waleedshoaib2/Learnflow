@@ -1,0 +1,177 @@
+---
+
+## 🔧 STEP 1: Understand the Goal
+
+We want to **train a model** that can **predict** a number (e.g., house price) using several features (e.g., size, number of rooms). The formula for linear regression is:
+
+$$
+\hat{y} = x_1 w_1 + x_2 w_2 + \dots + x_k w_k + b
+$$
+
+* $\hat{y}$: predicted output
+* $x_1, x_2, ..., x_k$: input features
+* $w_1, w_2, ..., w_k$: weights for each feature
+* $b$: bias (a constant added to the result)
+
+---
+
+## 📤 STEP 2: Forward Pass (Make Predictions)
+
+In the **forward pass**, we use current weights and bias to calculate predictions.
+
+If we have a batch of data (e.g., 3 houses), and each has 4 features:
+
+$$
+X =
+\begin{bmatrix}
+x_{11} & x_{12} & x_{13} & x_{14} \\
+x_{21} & x_{22} & x_{23} & x_{24} \\
+x_{31} & x_{32} & x_{33} & x_{34} \\
+\end{bmatrix}
+$$
+
+And weights:
+
+$$
+W =
+\begin{bmatrix}
+w_1 \\
+w_2 \\
+w_3 \\
+w_4 \\
+\end{bmatrix}
+$$
+
+Prediction is:
+
+$$
+\hat{y}_{\text{batch}} = X \cdot W + b
+$$
+
+---
+
+## 📉 STEP 3: Calculate the Loss (How Wrong Are We?)
+
+We compare the predictions $\hat{y}$ to the actual values $y$. One common loss function is **Mean Squared Error (MSE)**:
+
+$$
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+$$
+
+This gives us a number that tells us how far off our predictions are, on average.
+
+---
+
+## 🔁 STEP 4: Backward Pass (Calculate Gradients)
+
+Now, we calculate how to **change the weights and bias** to reduce the error. This is called the **gradient** (slope of the loss function with respect to each weight and bias).
+
+We use the **chain rule** from calculus:
+
+1. **Gradient of the loss with respect to the prediction**:
+
+   $$
+   \frac{\partial L}{\partial \hat{y}} = -2 (y - \hat{y})
+   $$
+
+2. **Gradient of prediction with respect to weights**:
+
+   $$
+   \frac{\partial \hat{y}}{\partial W} = X^T
+   $$
+
+3. **Gradient of loss with respect to weights**:
+
+   $$
+   \frac{\partial L}{\partial W} = X^T \cdot \frac{\partial L}{\partial \hat{y}}
+   $$
+
+4. **Gradient of loss with respect to bias**:
+
+   $$
+   \frac{\partial L}{\partial b} = \text{sum of all values in } \frac{\partial L}{\partial \hat{y}}
+   $$
+
+---
+
+## 🧠 STEP 5: Update the Model (Training)
+
+Now we update the weights and bias using the gradients.
+
+$$
+w_i := w_i - \text{learning rate} \times \frac{\partial L}{\partial w_i}
+$$
+
+$$
+b := b - \text{learning rate} \times \frac{\partial L}{\partial b}
+$$
+
+We do this many times (iterations/epochs) until the model gets better.
+
+---
+
+## 🧪 STEP 6: Evaluate the Model (Testing)
+
+We split the dataset into:
+
+* **Training set**: used to learn the weights.
+* **Testing set**: used to check how well the model performs on unseen data.
+
+To measure performance:
+
+1. **Mean Absolute Error (MAE)**:
+
+   $$
+   \text{MAE} = \frac{1}{n} \sum |y_i - \hat{y}_i|
+   $$
+
+2. **Root Mean Squared Error (RMSE)**:
+
+   $$
+   \text{RMSE} = \sqrt{\frac{1}{n} \sum (y_i - \hat{y}_i)^2}
+   $$
+
+The lower these values, the better your model is performing.
+
+---
+
+## 🔍 STEP 7: Understand the Model (Feature Importance)
+
+Each **weight $w_i$** tells us how important a feature is:
+
+* Large weight (positive or negative) = strong influence on prediction.
+* Small weight = less impact.
+
+We can plot the most important feature against the target to visually see the relationship.
+
+---
+
+## 🚫 STEP 8: Understand Model Limitations
+
+Linear regression only learns **straight-line relationships**. If the true pattern is curved or more complex, the model can't capture it.
+
+For example:
+
+* If the relationship between a feature and the output is curved, linear regression will still draw a straight line.
+* This is called a **model limitation**.
+
+To handle nonlinear relationships, we need more advanced models like **neural networks**.
+
+---
+
+## ✅ Final Summary of the Process
+
+| Step              | What Happens                      | Purpose                       |
+| ----------------- | --------------------------------- | ----------------------------- |
+| 1. Define Model   | Pick linear regression            | Learn simple relationships    |
+| 2. Forward Pass   | Predict using $XW + b$            | Estimate outputs              |
+| 3. Compute Loss   | Measure how wrong predictions are | Guide learning                |
+| 4. Backward Pass  | Calculate gradients               | Know how to change weights    |
+| 5. Update Weights | Adjust with gradients             | Improve predictions           |
+| 6. Evaluate       | Test on new data                  | Check generalization          |
+| 7. Interpret      | Look at weights                   | Understand feature importance |
+| 8. Reflect        | Spot limits                       | Plan for more advanced models |
+
+---
+
+Let me know if you’d like this turned into a flowchart, checklist, or visual!
